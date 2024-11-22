@@ -1,6 +1,9 @@
 package commandLineGames.zombieTrain;
-import java.util.Objects;
+import java.sql.SQLOutput;
 import java.util.Random;
+import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
+
 
 public class ZombieTrain {
 
@@ -69,7 +72,7 @@ public class ZombieTrain {
         Passenger current = head;
         Passenger prev = null;
         if(head != null && head.name.equals(name)) {
-            head = current.next;
+            head = head.next;
             return;
         }
         while (current != null) {
@@ -82,7 +85,91 @@ public class ZombieTrain {
         }
     }
 
-    public static void main(String[] args) {
+    public String chooseFighter(){
+        int heroCounter = 0;
+        int zombieCounter = 0;
+        Passenger current = head;
+        while(current != null) {
+            if(current.role.equals("Hero")) {
+                System.out.printf("%s[Level: %d]\n", current.name, current.level);
+                heroCounter++;
+            } else if(current.role.equals("Zombie")) {
+                zombieCounter++;
+            }
+            current = current.next;
+        }
+        if(heroCounter == 0) {
+            System.out.println("Sorry! You have no hero!");
+            return null;
+        }
+        if(zombieCounter == 0) {
+            System.out.println("There is no zombie to fight!");
+            return null;
+        }
+        System.out.printf("You've total %d heroes. Chose one of them to fight with zoombies!\n", heroCounter);
+        System.out.println("Enter a hero name: ");
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextLine();
+    }
+
+    public static void printWithTypingEffect(String text, int delay) {
+        for (char c : text.toCharArray()) { // Loop through each character
+            System.out.print(c); // Print character without a newline
+            try {
+                Thread.sleep(delay); // Delay for specified milliseconds
+            } catch (InterruptedException e) {
+                System.out.println("Typing interrupted");
+            }
+        }
+        System.out.println(); // Move to the next line after typing is done
+    }
+
+    public void fight() {
+        String fighterSource = chooseFighter();
+        Passenger fighter;
+        int whoWin;
+        if(fighterSource != null) {
+            Passenger current = head;
+            while(current != null) {
+                if(current.name.equals(fighterSource) && current.role.equals("Hero")) {
+                    fighter = current;
+                    System.out.println(fighterSource + " is going to fight with zombies!");
+                    String[] zombieWelcomeSound = {"Oh, fresh meat! I hope you taste better than my last fish curry. 🐟💀", "Why are you running? You’ll only sweat more—it’s like seasoning for me! 😈💦", "Your screams sound like Rabindra Sangeet to my undead ears. 🎶🧟", "Come closer, hero! I promise it won’t hurt... for long. 😬💀", "Are you lost? This isn’t Kolkata’s tram stop—it’s the end of your life! 🚋🩸", "You smell like biryani... or is that just fear marinated in sweat? 🍛💦", "Stop running, hero! I just want to… chew on your existential crisis. 🤤", "Oh, you’re brave? Let’s see how brave you are when I taste your liver! 🩸😈", "This is not your Bollywood fight scene, babu. I’m the real deal! 🎥👹", "Your heartbeat sounds like dhak drumming... perfect for a feast! 🥁💀", "Careful! One bite, and you’ll join me in our eternal adda of the dead. 🧛‍♂️☕", "I don’t care about your hero skills—just hand over your kidneys! 🧟‍♂️🩺", "Run all you want, but at the end, you’re still my midnight snack. 🌌🧟", "Ah, the sweet smell of human flesh... with a hint of mishti doi! 🍮💀", "You think you’re a hero? Even Durga Ma would run from me! 🗡️👹", "Shall I eat you now? Or let you marinate in fear a little longer? ⏳😈", "I skipped my last victim because he had no taste... you look better! 🧟‍♂️😂", "Your blood’s so fresh, I bet it’ll pair well with my afternoon cha! ☕🩸", "The good news? You won’t die hungry. The bad news? You’re dessert. 🍰💀", "Your fate is sealed. But hey, at least I’ll write a poem about it later! ✍️🧛‍♂️"};
+                    String[] heroWelcomeSound = {"I’ve seen more scary things in a Bengali auntie's adda than you. 🤣💀", "You call yourself a zombie? I’ve faced worse at a family wedding! 🥳💥", "Oh, look at you, trying to look tough. News flash—your bite is worse than your bark! 🧟‍♂️🙄", "I’ve had worse breath from my grandmother’s poodle. 🐩💨", "I don’t know who you think you’re scaring, but I’ve seen scarier things in my fridge. 🧟‍♂️🧀", "What’s this? A zombie or a poorly acted Bollywood villain? Pathetic. 🎥🙄", "I don’t have time for this. Go back to your grave, it’s where you belong. 🪦💀", "You really think I’ll be scared of you? I’ve been to a Bengali gharer pujo, trust me, you’re not that intimidating. 🏠👻", "You should be running from me, not the other way around. What are you even doing here? 🏃‍♂️💪", "I’ve had worse experiences on a Kolkata bus than dealing with you. 🚍💥", "I was expecting a challenge, not a walking disaster. 🧟‍♂️👎", "You’re trying to scare me? Ha, you should see me before my morning tea. You’ll regret it. ☕😤", "Is this all you’ve got? I’ve faced bigger threats from my internet connection. 💻⚡", "You call that a growl? It sounds like a cat trying to do a low-budget horror film. 🐱🎬", "You’re like the bargain bin zombie—cheap and easy to beat. 🧟‍♂️💸", "Oh, so you think you’re intimidating? I’ve seen more life in a soggy paratha. 🍞🧟", "You’re slow, you’re stupid, and you’re about to get schooled. 🏫💀", "Look at you, still thinking you have a chance. I’m just here for the victory. 🏆💥", "I’m not scared of you, I’ve faced my mother’s dudh bhat without blinking. 🍼😎", "Your rotting skills need work. I’ve seen better decay on a week-old mango. 🥭💀", "Just give up already, you’re about as useful as a broken umbrella in a monsoon. ☔💀"};
+
+                    Random random = new Random();
+                    String one = "Zombie: " + zombieWelcomeSound[random.nextInt(zombieWelcomeSound.length)];
+                    String two = fighterSource + ": " + heroWelcomeSound[random.nextInt(heroWelcomeSound.length)];
+                    printWithTypingEffect(one, 100);
+                    printWithTypingEffect(two, 100);
+
+                    whoWin = random.nextInt(2);
+                    if (whoWin == 0) {
+                        System.out.println( fighterSource + " lose and died!");
+                        removePassengers(fighterSource);
+                    } else {
+                        System.out.println(fighterSource + " won!");
+                        current = head;
+                        while(current != null) {
+                            if(current.role.equals("zombie")) {
+                                removePassengers(fighterSource);
+                                return;
+                            }
+                            current = current.next;
+                        }
+                    }
+                    return;
+                } else {
+                    current = current.next;
+                }
+            }
+        } else {
+            return;
+        }
+    }
+
+
+    public static void main(String[] args) throws InterruptedException {
         ZombieTrain zt = new ZombieTrain();
         zt.insertPassenger();
         zt.insertPassenger();
@@ -90,15 +177,7 @@ public class ZombieTrain {
         zt.insertPassenger();
         zt.viewPassengers();
 
-        Passenger current = zt.head;
-        String darling;
-        while(current != null) {
-            if(current.role.equals("Zombie")) {
-                darling = current.name;
-                zt.removePassengers(darling);
-                break;
-            }
-        }
+        zt.fight();
         zt.viewPassengers();
     }
 
