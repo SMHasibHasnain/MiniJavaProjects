@@ -65,6 +65,22 @@ public class ZombieTrain {
         System.out.println(Cyan + Bold + "Null" + Reset);
     }
 
+    public void removePassengers(String name) {
+        Passenger current = head;
+        Passenger prev = null;
+        if(head != null && head.name.equals(name)) {
+            head = current.next;
+            return;
+        }
+        while (current != null) {
+            if(current.name.equals(name) && (current.role.equals("Zombie") || current.role.equals("Hero"))) {
+                prev.next = current.next;
+                return;
+            }
+            prev = current;
+            current = current.next;
+        }
+    }
 
     public static void main(String[] args) {
         ZombieTrain zt = new ZombieTrain();
@@ -72,6 +88,17 @@ public class ZombieTrain {
         zt.insertPassenger();
         zt.insertPassenger();
         zt.insertPassenger();
+        zt.viewPassengers();
+
+        Passenger current = zt.head;
+        String darling;
+        while(current != null) {
+            if(current.role.equals("Zombie")) {
+                darling = current.name;
+                zt.removePassengers(darling);
+                break;
+            }
+        }
         zt.viewPassengers();
     }
 
