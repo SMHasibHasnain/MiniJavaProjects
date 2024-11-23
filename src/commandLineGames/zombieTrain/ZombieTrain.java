@@ -27,7 +27,7 @@ public class ZombieTrain {
         Passenger next;
 
         String[] names = {"Hasib", "Rajib", "Suman", "Tanvir", "Zim", "Tofayel", "Sami", "Ishrat", "Ratna", "Mita", "Ria", "Mujahid", "Anis", "Fatema", "Arpita", "Sagor", "Samiul",  "Ananya", "Rahul", "Priya", "Fahim", "Riya", "Shubho", "Tania", "Niloy", "Meher", "Shuvo", "Monira", "Iqbal", "Tanima", "Arif", "Kiran", "Shanta", "Ayesha", "Nabil", "Jannat", "Saad", "Nilima", "Imran", "Rezwana", "Jamil", "Nusrat", "Shohel", "Rasheda", "Rubina", "Abir", "Rajib", "Sharmila", "Mamun", "Kazi", "Shukla", "Roni", "Shirin", "Mahmud", "Kaziya", "Safiya", "Tanvir", "Riyaaz", "Sadiya", "Hossain", "Fatema", "Yasin", "Kazi", "Rashed", "Sabrina", "Jubaida", "Mehedi", "Neelima", "Sadman", "Tanvir", "Anis", "Asifa", "Shahin", "Hena", "Rakib", "Monira", "Zarin", "Arslan", "Nisha", "Omar", "Areeba", "Shawon", "Lubna", "Shahab", "Hamim", "Arindom", "Mehrin"};
-        String[] roles = {"Human", "Human", "Hero", "Zombie", "Zombie"};
+        String[] roles = {"Human", "Human", "Human", "Hero", "Zombie", "Zombie"};
         int[] levels = {1, 2, 3};
 
         Passenger(){
@@ -182,18 +182,52 @@ public class ZombieTrain {
         }
     }
 
+    public void researchCenter() {
+        System.out.println("________________________________");
+        System.out.println("        Research Center");
+        System.out.println("--------------------------------");
+        System.out.println("You need total 200 coins to research an antidote!");
+        if(coins<200) {
+            System.out.println("But you have only " + coins + " coins!");
+            return;
+        } else {
+            System.out.println("You have total " + coins + " coins." + "You are eligible for the research!");
+            System.out.println("Do you want to perform the research?");
+            System.out.println("1. Yes");
+            System.out.println("2. Later");
+            Scanner scanner = new Scanner(System.in);
+            int choice = scanner.nextInt();
+            if(choice == 1) {
+                Passenger current = head;
+                while(current != null) {
+                    if(current.role.equals("Zombie")) {
+                        current.role = "Human";
+                    }
+                    current = current.next;
+                }
+                System.out.println("Hurrray! all zombies became normal human!");
+                viewPassengers();
+            }
+        }
+    }
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         ZombieTrain zt = new ZombieTrain();
         zt.insertPassenger();
         zt.insertPassenger();
         zt.insertPassenger();
         zt.insertPassenger();
+        zt.insertPassenger();
+        zt.insertPassenger();
+        zt.insertPassenger();
+        zt.insertPassenger();
         zt.viewPassengers();
-        System.out.println(coins);
-        zt.chooseFighter();
-        zt.viewPassengers();
-        System.out.println(coins);
+//        System.out.println(coins);
+//        zt.chooseFighter();
+//        System.out.println(coins);
+
+        coins = 210;
+        zt.researchCenter();
     }
 
 
