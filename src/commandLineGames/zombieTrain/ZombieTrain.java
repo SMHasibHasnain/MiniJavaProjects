@@ -55,6 +55,20 @@ public class ZombieTrain {
             }
             current.next = newPassenger;
         }
+        System.out.println("New Passenger just arrived!");
+        if(newPassenger.role.equals("Human")) {
+            System.out.println("Passenger: Help Me! Please Help Me!");
+            System.out.println("Passenger: I'm " + newPassenger.name + ". I'm human, Believe me!");
+            System.out.println( Bold + Green + "You have earned 10 coin for helping him/her!" + Reset);
+        } else if (newPassenger.role.equals("Hero")) {
+            System.out.println("Passenger: Are there any zombie? Let me fuck them!");
+            System.out.println("Passenger: I'm " + newPassenger.name + ". People tag me Hero! Am I?");
+            System.out.println( Bold + Cyan + "This entity will fight for you against zombies. Also, You have earned 10 coin for picking him/her!" + Reset);
+        } else if (newPassenger.role.equals("Zombie")) {
+            System.out.println("Passenger: Help me too! Vhhhh...! I'm hungry, need blood!, Ghhhhhh....!");
+            System.out.println("Passenger: People call me " + newPassenger.name + ". I'm also human, Trust me!");
+            System.out.println( Bold + Red + "This entity is no more a human being. It will kill innocent humans" + Reset);
+        }
     }
 
     public void viewPassengers() {
@@ -211,23 +225,42 @@ public class ZombieTrain {
         }
     }
 
+    public void startGame() {
+        int choice;
+        Scanner scanner = new Scanner(System.in);
+        do {
+            System.out.println("_________________________________");
+            System.out.println("        Zombie Train Game");
+            System.out.println("_________________________________");
+            System.out.println("Your Coin: " + coins + "   Total zombie killed: ");
+            System.out.println("1. Take Passenger");
+            System.out.println("2. View Passengers");
+            System.out.println("3. Fight");
+            System.out.println("4. Research Center");
+            System.out.println("Enter your choice:");
+            choice = scanner.nextInt();
+            switch(choice) {
+                case 1:
+                    insertPassenger();
+                    break;
+                case 2:
+                    viewPassengers();
+                    break;
+                case 3:
+                    chooseFighter();
+                    break;
+                case 4:
+                    researchCenter();
+                    break;
+                default:
+                    System.out.println("Invalid choice! Try again.");
+            }
+        } while(true);
+    }
+
     public static void main(String[] args) {
         ZombieTrain zt = new ZombieTrain();
-        zt.insertPassenger();
-        zt.insertPassenger();
-        zt.insertPassenger();
-        zt.insertPassenger();
-        zt.insertPassenger();
-        zt.insertPassenger();
-        zt.insertPassenger();
-        zt.insertPassenger();
-        zt.viewPassengers();
-//        System.out.println(coins);
-//        zt.chooseFighter();
-//        System.out.println(coins);
-
-        coins = 210;
-        zt.researchCenter();
+        zt.startGame();
     }
 
 
