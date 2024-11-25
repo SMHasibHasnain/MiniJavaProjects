@@ -1,5 +1,4 @@
 package commandLineGames.zombieTrain;
-import java.sql.SQLOutput;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -8,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 public class ZombieTrain {
 
     static int coins = 0;
+    static int zombieCounter = 0;
 
     final String Black = "\u001B[30m";
     final String Red = "\u001B[31m";
@@ -19,6 +19,8 @@ public class ZombieTrain {
     final String White = "\u001B[37m";
     final String Reset = "\u001B[0m";
     final String Bold = "\u001B[1m";
+    final String Clear = "\\033[2K\\r";
+
 
     static class Passenger{
         String name;
@@ -38,12 +40,13 @@ public class ZombieTrain {
             next = null;
             if(this.role.equals("Human") || this.role.equals("Hero")) {
                 coins += 10;
+            } else {
+                zombieCounter++;
             }
         }
     }
 
     Passenger head;
-
     public void insertPassenger() {
         Passenger newPassenger = new Passenger();
         if (head == null) {
@@ -143,6 +146,16 @@ public class ZombieTrain {
         System.out.println(); // Move to the next line after typing is done
     }
 
+//    public void countAllZombies() {
+//        Passenger current = head;
+//        while(current != null) {
+//            if(current.role.equals("Zombie")) {
+//                zombieCounter++;
+//            }
+//            current = current.next;
+//        }
+//    }
+
     void fight(Passenger fighter) {
         int whoWin;
 
@@ -165,6 +178,7 @@ public class ZombieTrain {
             } else {
                 System.out.println(fighter.name + " won!");
                 coins += 15;
+                zombieCounter--;
                 int flag = 0;
                 Passenger current = head;
                 while(current != null) {
@@ -197,6 +211,7 @@ public class ZombieTrain {
     }
 
     public void researchCenter() {
+        System.out.println(Clear);
         System.out.println("________________________________");
         System.out.println("        Research Center");
         System.out.println("--------------------------------");
@@ -225,14 +240,24 @@ public class ZombieTrain {
         }
     }
 
+    public void clearThisConsole() {
+        //Currently clearing console is not working on linux - intelliz idea ide
+        for (int i = 0; i < 100; i++) {
+            System.out.println();
+        }
+    }
+
     public void startGame() {
+        clearThisConsole();
         int choice;
         Scanner scanner = new Scanner(System.in);
         do {
+            System.out.println("\033[H\033[2J");
+            System.out.flush();
             System.out.println("_________________________________");
             System.out.println("        Zombie Train Game");
             System.out.println("_________________________________");
-            System.out.println("Your Coin: " + coins + "   Total zombie killed: ");
+            System.out.println("Your Coin: " + coins + "   Total zombie:" + zombieCounter);
             System.out.println("1. Take Passenger");
             System.out.println("2. View Passengers");
             System.out.println("3. Fight");
@@ -260,9 +285,10 @@ public class ZombieTrain {
 
     public static void main(String[] args) {
         ZombieTrain zt = new ZombieTrain();
+        zt.insertPassenger();
+        zt.insertPassenger();
+        zt.insertPassenger();
+        zt.insertPassenger();
         zt.startGame();
     }
-
-
-
 }
