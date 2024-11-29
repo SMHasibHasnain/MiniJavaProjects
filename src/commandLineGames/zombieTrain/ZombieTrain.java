@@ -29,7 +29,7 @@ public class ZombieTrain {
         Passenger next;
 
         String[] names = {"Hasib", "Rajib", "Suman", "Tanvir", "Zim", "Tofayel", "Sami", "Ishrat", "Ratna", "Mita", "Ria", "Mujahid", "Anis", "Fatema", "Arpita", "Sagor", "Samiul",  "Ananya", "Rahul", "Priya", "Fahim", "Riya", "Shubho", "Tania", "Niloy", "Meher", "Shuvo", "Monira", "Iqbal", "Tanima", "Arif", "Kiran", "Shanta", "Ayesha", "Nabil", "Jannat", "Saad", "Nilima", "Imran", "Rezwana", "Jamil", "Nusrat", "Shohel", "Rasheda", "Rubina", "Abir", "Rajib", "Sharmila", "Mamun", "Kazi", "Shukla", "Roni", "Shirin", "Mahmud", "Kaziya", "Safiya", "Tanvir", "Riyaaz", "Sadiya", "Hossain", "Fatema", "Yasin", "Kazi", "Rashed", "Sabrina", "Jubaida", "Mehedi", "Neelima", "Sadman", "Tanvir", "Anis", "Asifa", "Shahin", "Hena", "Rakib", "Monira", "Zarin", "Arslan", "Nisha", "Omar", "Areeba", "Shawon", "Lubna", "Shahab", "Hamim", "Arindom", "Mehrin"};
-        String[] roles = {"Human", "Human", "Human", "Hero", "Zombie", "Zombie"};
+        String[] roles = {"Human", "Human", "Human", "Human", "Human", "Hero", "Hero", "Zombie", "Zombie"};
         int[] levels = {1, 2, 3};
 
         Passenger(){
@@ -50,7 +50,7 @@ public class ZombieTrain {
         }
     }
 
-    Passenger head;
+    static Passenger head;
     public void insertPassenger() {
         Passenger newPassenger = new Passenger();
         if (head == null) {
@@ -162,7 +162,7 @@ public class ZombieTrain {
         }
     }
 
-    Passenger currentFighterZombie() {
+    static Passenger currentFighterZombie() {
         Passenger current = head;
         while(current != null) {
             if(current.role.equals("Zombie")) {
@@ -206,9 +206,10 @@ public class ZombieTrain {
                 String finishingSound1 = Red + Bold + currentZombie.name + " (Zombie): " + Reset + zombieDeathSound[random.nextInt(zombieDeathSound.length)];
                 printWithTypingEffect(finishingSound1, 60);
 
-                coins += 15;
+                coins += 50;
                 zombieCounter--;
                 removePassengers(currentZombie.name);
+                System.out.println("You will get 50 dollar by selling this zombie body and his/her elements!");
                 if(zombieCounter>1) {
                     System.out.println();
                     System.out.println(fighter.name + "wanna kill more zombies!");
@@ -269,18 +270,36 @@ public class ZombieTrain {
         }
     }
 
-    public void startGame() {
+//    public void bite() throws InterruptedException {
+//        Random rand = new Random();
+//        int toss = rand.nextInt(10);
+//        if(toss >= 6) {
+//            biteCase newBite = new biteCase(head, currentFighterZombie());
+//            newBite.start();
+//            newBite.join();
+//        }
+//    }
+
+    public void gameStatus() throws InterruptedException {
+        System.out.println("_________________________________");
+        System.out.println("        Zombie Train Game");
+        System.out.println("_________________________________");
+        System.out.println("Your Coin: " + coins + "   Total zombie:" + zombieCounter);
+        System.out.println("Total Passengers: " + totalPassenger + "   Total Heros:" + heroCounter);
+        System.out.println("_________________________________");
+    }
+
+    public boolean gameOver() {
+        int human = totalPassenger - (zombieCounter + heroCounter);
+        return human == 0 && heroCounter == 0;
+    }
+
+    public void startGame() throws InterruptedException {
         clearThisConsole();
         int choice;
         Scanner scanner = new Scanner(System.in);
-        do {
-            System.out.println("\033[H\033[2J");
-            System.out.flush();
-            System.out.println("_________________________________");
-            System.out.println("        Zombie Train Game");
-            System.out.println("_________________________________");
-            System.out.println("Your Coin: " + coins + "   Total zombie:" + zombieCounter);
-            System.out.println("Total Passengers: " + totalPassenger + "   Total Heros:" + heroCounter);
+        while (!gameOver()) {
+            gameStatus();
             System.out.println("1. Take Passenger");
             System.out.println("2. View Passengers");
             System.out.println("3. Fight");
@@ -303,15 +322,18 @@ public class ZombieTrain {
                 default:
                     System.out.println("Invalid choice! Try again.");
             }
-        } while(true);
+        }
+        System.out.println("Game Over!");
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         ZombieTrain zt = new ZombieTrain();
         zt.insertPassenger();
         zt.insertPassenger();
         zt.insertPassenger();
         zt.insertPassenger();
+        trigger1 t1 = new trigger1(head);
+        t1.start();
         zt.startGame();
     }
 }
