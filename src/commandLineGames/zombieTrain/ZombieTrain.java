@@ -12,13 +12,14 @@ public class ZombieTrain {
     final String Black = "\u001B[30m";
     final String Red = "\u001B[31m";
     final String Green = "\u001B[32m";
-    final String Yellow = "\u001B[33m";
+    static final String Yellow = "\u001B[33m";
     final String Blue = "\u001B[34m";
     final String Magenta = "\u001B[35m";
     final String Cyan = "\u001B[36m";
     final String White = "\u001B[37m";
-    final String Reset = "\u001B[0m";
+    static final String Reset = "\u001B[0m";
     final String Bold = "\u001B[1m";
+    static final String Italic = "\u001B[3m";
     final String Clear = "\\033[2K\\r";
 
 
@@ -80,18 +81,20 @@ public class ZombieTrain {
 
     public void viewPassengers() {
         Passenger current = head;
+        System.out.print("\uD83D\uDE82");
         while (current != null) {
 
             if(current.role.equals("Hero")) {
-                System.out.printf("%s%s[%s%s%s%s]%s -> ", Bold, current.name, Green, current.role, Reset, Bold, Reset);
+                System.out.printf("%s%s%s[%s%s%s%s]%s -> ", Bold, "\uD83D\uDE8B", current.name, Green, current.role, Reset, Bold, Reset);
             } else if(current.role.equals("Zombie")) {
-                System.out.printf("%s%s[%s%s%s%s]%s -> ", Bold, current.name, Red, current.role, Reset, Bold, Reset);
+                System.out.printf("%s%s[%s%s%s%s]%s -> ", Bold, "\uD83D\uDE8B", current.name, Red, current.role, Reset, Bold, Reset);
             } else {
-                System.out.printf("%s[%s] -> ", current.name, current.role);
+                System.out.printf("%s[%s] -> ", "\uD83D\uDE8B", current.name, current.role);
             }
             current = current.next;
         }
-        System.out.println(Cyan + Bold + "Null" + Reset);
+        System.out.print(Cyan + Bold + "Null" + Reset);
+        System.out.println("\uD83D\uDE8B");
     }
 
     public void removePassengers(String name) {
@@ -194,7 +197,7 @@ public class ZombieTrain {
 
             whoWin = random.nextInt(2);
             if (whoWin == 0) {
-                System.out.println( fighter.name + " lose and died! ☠\uFE0F");
+                System.out.println( fighter.name + " lose and died! \uD83E\uDEA6");
                 coins -= 10;
                 heroCounter--;
                 totalPassenger--;
@@ -238,8 +241,8 @@ public class ZombieTrain {
         System.out.println("________________________________");
         System.out.println("        Research Center");
         System.out.println("--------------------------------");
-        System.out.println("You need total 200 coins to research an antidote!");
-        if(coins<200) {
+        System.out.println("You need total 2000 coins to research an antidote!");
+        if(coins<2000) {
             System.out.println("But you have only " + coins + " coins!");
             return;
         } else {
@@ -281,12 +284,14 @@ public class ZombieTrain {
 //    }
 
     public void gameStatus() throws InterruptedException {
-        System.out.println("_________________________________");
-        System.out.println("        Zombie Train Game");
-        System.out.println("_________________________________");
-        System.out.println("Your Coin: " + coins + "   Total zombie:" + zombieCounter);
-        System.out.println("Total Passengers: " + totalPassenger + "   Total Heros:" + heroCounter);
-        System.out.println("_________________________________");
+        System.out.println();
+        System.out.println(White + "_________________________________" + Reset);
+        System.out.println(Bold + Yellow + "        \uD83D\uDE82Zombie\uD83D\uDE8BTrain\uD83D\uDE8BGame\uD83D\uDE8B" + Reset);
+        System.out.println(White + "_________________________________" + Reset);
+        System.out.println(Italic + "\uD83E\uDE99" + Bold + Magenta + "Your Coin: " + Cyan + coins + Magenta + "  \uD83E\uDDDF\u200D♂\uFE0FTotal zombie: " + Red + zombieCounter);
+        System.out.println( Magenta + "\uD83D\uDE4D\uD83C\uDFFB\u200D♂\uFE0F\uD83D\uDE4E\uD83C\uDFFB\u200D♀\uFE0FTotal Passengers: " + Cyan + totalPassenger + Magenta + "   \uD83E\uDDB8\uD83C\uDFFB\u200D♂\uFE0FTotal Heros: " + Green + heroCounter + Reset);
+        System.out.println(White + "_________________________________" + Reset);
+        System.out.println();
     }
 
     public boolean gameOver() {
@@ -300,11 +305,11 @@ public class ZombieTrain {
         Scanner scanner = new Scanner(System.in);
         while (!gameOver()) {
             gameStatus();
-            System.out.println("1. Take Passenger");
+            System.out.println( Italic + "1. Take Passenger");
             System.out.println("2. View Passengers");
             System.out.println("3. Fight");
-            System.out.println("4. Research Center");
-            System.out.println("Enter your choice:");
+            System.out.println("4. Research Center\n");
+            System.out.print( Blue + "Enter your choice: " + Reset);
             choice = scanner.nextInt();
             switch(choice) {
                 case 1:

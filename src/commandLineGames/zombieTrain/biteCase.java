@@ -39,7 +39,8 @@ class biteCase extends Thread {
         if(whoGotBite == null) {
             return;
         }
-        System.out.println(Red + Bold + "⚠ Caution: " + Reset + Bold + whoGotBite.name + " got a bite from a Zombie. He has become a Zombie now!\uD83E\uDDDF" + Reset);
+        System.out.println();
+        System.out.print(Red + Bold + "⚠ Caution: " + Reset + Bold + whoGotBite.name + " got a bite from a Zombie. He has become a Zombie now!\uD83E\uDDDF" + Reset);
         //System.out.println("_________________________________");
         ZombieTrain.zombieCounter++;
     }
