@@ -21,6 +21,7 @@ public class trigger1 extends Thread{
 
     public void run() {
         while(true) {
+            int prev = ZombieTrain.zombieCounter;
             for(int i = 0; i < ZombieTrain.zombieCounter; i++) {
                 try {
                     bite();
@@ -28,8 +29,13 @@ public class trigger1 extends Thread{
                     throw new RuntimeException(e);
                 }
             }
+            int curr = ZombieTrain.zombieCounter;
+            int change = curr - prev;
+            if(ZombieTrain.zombieCounter>1 && change > 0 ) {
+                System.out.println("Here is total " + ZombieTrain.zombieCounter + " zombies now! Zombies can bite innocent humans! Fight and Kill the jombies fast!⚔\uFE0F");
+            }
             try {
-                sleep(3000);
+                sleep(5000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

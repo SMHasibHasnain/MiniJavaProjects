@@ -188,13 +188,13 @@ public class ZombieTrain {
             Random random = new Random();
             String one = Red + Bold + currentZombie.name + " (Zombie): " + Reset + zombieWelcomeSound[random.nextInt(zombieWelcomeSound.length)];
             String two = Green + Bold + fighter.name + ": " + Reset + heroWelcomeSound[random.nextInt(heroWelcomeSound.length)];
-            printWithTypingEffect(one, 100);
-            printWithTypingEffect(two, 100);
+            printWithTypingEffect(one, 60);
+            printWithTypingEffect(two, 60);
             System.out.println();
 
             whoWin = random.nextInt(2);
             if (whoWin == 0) {
-                System.out.println( fighter.name + " lose and died!");
+                System.out.println( fighter.name + " lose and died! ☠\uFE0F");
                 coins -= 10;
                 heroCounter--;
                 totalPassenger--;
@@ -204,7 +204,7 @@ public class ZombieTrain {
 
                 String[] zombieDeathSound = {"💀 Thud... No more moving!", "🧟‍♂️ No! Not my brains!", "🩸 Splatter... End of the road.", "⚰️ Silence... nothing left but dust.", "🔥 Burnt to a crisp!", "💥 Pow! Dead in one hit!", "🧠 Zzz... Complete shutdown.", "⚡ Zap! Disintegrated!", "🧟 Groan... it's over.", "🏹 Thunk! Arrow through the skull.", "💀 Crack... My bones break!", "🧟‍♂️ Grr... I can't move!", "🧠 Ugh... brainsss... lost...", "🩸 Splish-splash... fading away.", "🧟 Bwwaaahhh... I’m done.", "🧟‍♀️ *Gurgles*... Not today.", "💀 Clank... Collapsing to the ground.", "🔥 Sizzle... Burnt from the inside out.", "⚰️ Withering away... No more life.", "🧟‍♂️ Slump... Dead again.", "🩸 Gasp... Life leaking away.", "🌫️ Fade away into nothing...", "💥 *Crash*... Headshot!", "🧠 Bleh... Can’t reach my brain.", "🧟 Groan... Falling apart.", "⚡ Zap... Electrical shock to the heart.", "🧟‍♀️ Oof... Out of energy!", "💀 *Snap*... No more movement.", "💨 With a final breath... it's over."};
                 String finishingSound1 = Red + Bold + currentZombie.name + " (Zombie): " + Reset + zombieDeathSound[random.nextInt(zombieDeathSound.length)];
-                printWithTypingEffect(finishingSound1, 60);
+                printWithTypingEffect(finishingSound1, 30);
 
                 coins += 50;
                 zombieCounter--;
@@ -323,7 +323,7 @@ public class ZombieTrain {
                     System.out.println("Invalid choice! Try again.");
             }
         }
-        System.out.println("Game Over!");
+        System.out.println("Game Over!\uD83C\uDFC1");
     }
 
     public static void main(String[] args) throws InterruptedException {
