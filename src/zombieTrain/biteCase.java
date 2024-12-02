@@ -1,4 +1,4 @@
-package commandLineGames.zombieTrain;
+package zombieTrain;
 
 class biteCase extends Thread {
 
