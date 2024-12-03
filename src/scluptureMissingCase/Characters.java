@@ -2,28 +2,86 @@ package scluptureMissingCase;
 
 public abstract class Characters {
 
-    public abstract String getName();
-    public abstract void setName(String name);
+    private String name;
+    private String gender;
+    private String role;
+    private int honestyMtr;
+    private int trustMtr;
+    private String mode;
+    private int emotion;
 
-    public abstract String getGender();
-    public abstract void setGender(String gender);
+    public String getName(){
+        return name;
+    };
+    
+    public void setName(String name) {
+        if(name.length()>5) {
+            this.name = name; //Must have at least 5 words
+        } else {
+            System.out.println("Name is too short!");
+        }
+    };
 
-    public abstract int getAge();
-    public abstract void setAge(int age);
+    public String getRole(){
+        return role;
+    };
 
-    public abstract String getRole();
-    public abstract void setRole(String role);
+    public void setRole(String role){
+        this.role = role;
+    };
 
-    public abstract int getHonesty(); //Range out of 5
-    public abstract void setHonesty(int honesty);
+    public int getHonesty(){
+        return honestyMtr;
+    } //Range out of 5
+    public void setHonesty(int honesty){
+        if(honesty>0 && honesty<=5) {
+            this.honestyMtr = honesty;
+        } else {
+            System.out.println("Honesty Meter is invalid!");
+        }
+    }
 
-    public abstract int getTrust(); //Range out of 5
-    public abstract void setTrust(int trust);
+    public int getTrust(){
+        return trustMtr;
+    } //Range out of 5
+    public void setTrust(int trust){
+        if(trust>0 && trust<=5) {
+            this.trustMtr = trust;
+        } else {
+            System.out.println("Trust Meter is invalid!");
+        }
+    }
 
-    public abstract String getMode(); //Out of 5, 0-2 Tired, Sad; 3-5 Happy, Energetic
-    public abstract void setMode(int mode);
+    public String getMode(){
+        return mode;
+    } //Out of 4, Tired, Sad; Neutral, Energetic
+    public void setMode(String mode){
+        if(mode.equals("Tired") || mode.equals("Sad") || mode.equals("Neutral") || mode.equals("Energetic")) {
+            this.mode = mode;
+        }
+    }
 
-    public abstract String getEmotion(); //Out of 5, crying-loved-neutral-angry
-    public abstract void setMode(String emotion);
+    public String getEmotion(){
+        if(emotion>0 && emotion<=3) {
+            return "crying!";
+        } else if(emotion>3 && emotion<=6) {
+            return "loved!";
+        } else if (emotion>6 && emotion<=9) {
+            return "neutral!";
+        } else if (emotion>9 && emotion<=12) {
+            return "angry!";
+        } else {
+            return "can't assume!";
+        }
 
+    } //Out of 12, crying-loved-neutral-angry
+    public void setEmotion(int emotion){
+        if(emotion>0 && emotion<=12) {
+            this.emotion = emotion;
+        } else if (emotion>12) {
+            this.emotion = 12;
+        } else if(emotion<0) {
+            this.emotion = 0;
+        }
+    }
 }
