@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class ZombieTrain {
 
-    static int coins = 1900;
+    static int coins = 0;
     static int totalPassenger = 0;
     static int zombieCounter = 0;
     static int heroCounter = 0;
